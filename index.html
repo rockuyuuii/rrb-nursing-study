@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="RRB Nursing Superintendent Study Command Center">
+<link rel="manifest" href="manifest.json">
+<title>RRB Nursing Quest</title>
+<style>
+:root{--bg:#07111f;--bg2:#0d1728;--card:#101d31;--card2:#17263e;--text:#f3f7ff;--muted:#9eacc2;--line:#263752;--cyan:#67e8f9;--green:#34d399;--yellow:#fbbf24;--pink:#fb7185;--purple:#a78bfa}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 20% 0%,#173354 0,#07111f 34%,#050b14 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#fff3 1px,transparent 1px);background-size:32px 32px;opacity:.12;animation:drift 20s linear infinite}
+@keyframes drift{to{background-position:160px 160px}}@keyframes float{50%{transform:translateY(-5px)}}@keyframes pop{0%{transform:scale(.7);opacity:0}80%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}@keyframes shine{to{transform:translateX(120%)}}@keyframes pulse{50%{box-shadow:0 0 0 8px #67e8f900,0 0 28px #67e8f955}}
+header{position:sticky;top:0;z-index:20;background:#07111fe8;backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px 16px}
+.headerRow{max-width:950px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--cyan),var(--purple));display:grid;place-items:center;color:#06101d;font-weight:1000;font-size:15px;box-shadow:0 0 22px #67e8f955;animation:float 3s ease-in-out infinite}.brand h1{font-size:18px;margin:0}.sub{font-size:11px;color:var(--muted)}
+main{max-width:950px;margin:auto;padding:16px}.hero{background:linear-gradient(135deg,#122944cc,#101a2ccc);border:1px solid #315174;border-radius:22px;padding:18px;position:relative;overflow:hidden;margin-bottom:14px}.hero:after{content:"";position:absolute;top:0;left:-50%;width:30%;height:100%;background:linear-gradient(90deg,transparent,#fff2,transparent);transform:skewX(-18deg);animation:shine 5s infinite}.hero h2{margin:0 0 6px;font-size:25px}.hero p{margin:0;color:#c5d0e2;font-size:13px}.heroStats{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.pill{background:#07111f99;border:1px solid #35506f;border-radius:999px;padding:7px 10px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}@media(min-width:720px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#0e1a2bcc;border:1px solid var(--line);border-radius:17px;padding:14px;margin-bottom:13px;box-shadow:0 12px 35px #0003;animation:pop .35s ease both}.stat{font-size:25px;font-weight:900}.label{font-size:11px;color:var(--muted);margin-top:3px}
+.progress{height:10px;background:#22314a;border-radius:99px;overflow:hidden;margin-top:9px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:99px;transition:width .55s cubic-bezier(.2,.8,.2,1);position:relative}.bar:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,#fff5,transparent);animation:shine 2.5s infinite}
+.xpBar{background:linear-gradient(90deg,var(--green),var(--cyan))}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.small{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:7px;overflow:auto;margin-bottom:14px;padding-bottom:2px}.tabs button{white-space:nowrap}
+button{border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:var(--card2);color:var(--text);font-weight:800;cursor:pointer;transition:.15s}button:hover{transform:translateY(-1px);border-color:#55779d}button:active{transform:scale(.97)}button.primary{background:linear-gradient(135deg,var(--cyan),#8b9cff);color:#06101d;border:0}button.active{background:var(--cyan);color:#06101d;border-color:var(--cyan)}button.danger{background:#351724;color:#fecdd3}
+section{display:none}.activeSection{display:block}.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.subject{padding:12px 0;border-bottom:1px solid var(--line)}.subject:last-child{border:0}.subject h3{font-size:14px;margin:0}.subjectBtn{width:100%;text-align:left;margin-top:8px}
+input{width:100%;background:#08111f;border:1px solid var(--line);color:var(--text);border-radius:9px;padding:10px;text-align:center}
+.quest{display:flex;align-items:center;gap:12px;background:#101d31;border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0}.quest input{width:20px;height:20px}.quest.done{border-color:#236b55;background:#0e241f}.quest.done .qtext{text-decoration:line-through;color:#8bb9aa}
+.achievement{display:inline-flex;align-items:center;gap:7px;background:#18263d;border:1px solid #354b69;border-radius:999px;padding:7px 10px;margin:4px;font-size:12px}
+.boss{background:linear-gradient(135deg,#291a36,#101b32);border-color:#5e3b73}.boss .bar{background:linear-gradient(90deg,var(--pink),var(--purple))}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);z-index:100;background:#eafcff;color:#06101d;border-radius:14px;padding:12px 16px;font-weight:900;box-shadow:0 12px 35px #0007;transition:.35s;max-width:90%;text-align:center}.toast.show{transform:translateX(-50%) translateY(0)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}.piece{position:absolute;width:8px;height:13px;animation:fall 1.2s ease-out forwards}@keyframes fall{to{transform:translate(var(--x),110vh) rotate(720deg);opacity:0}}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
+</style>
+</head>
+<body>
+<header><div class="headerRow"><div class="brand"><div class="logo">RN</div><div><h1>RRB Nursing Quest</h1><div class="sub">Study Command Center • 30 Dec 2026</div></div></div><div class="pill">🔥 <span id="streak">0</span> day streak</div></div></header>
+<main>
+<div class="hero">
+<h2 id="greeting">Mission: Nursing Superintendent</h2>
+<p id="quote">Small wins, repeated daily, become the syllabus.</p>
+<div class="heroStats"><span class="pill">⭐ Level <b id="level">1</b></span><span class="pill">⚡ <b id="xp">0</b> XP</span><span class="pill">🏆 <b id="badges">0</b> badges</span><span class="pill">⏳ <b id="daysLeft">—</b> days left</span></div>
+<div class="progress" style="margin-top:14px"><div class="bar xpBar" id="xpBar"></div></div>
+<div class="small" style="margin-top:5px">Next level: <span id="nextXP">100</span> XP</div>
+</div>
+
+<div class="grid">
+<div class="card"><div class="stat" id="vDone">0</div><div class="label">🎥 Videos / 697</div><div class="progress"><div class="bar" id="vBar"></div></div></div>
+<div class="card"><div class="stat" id="mDone">0</div><div class="label">🧠 MCQ Pass 1 / 9,000</div><div class="progress"><div class="bar" id="mBar"></div></div></div>
+<div class="card"><div class="stat" id="m2Done">0</div><div class="label">🔁 MCQ Pass 2 / 9,000</div><div class="progress"><div class="bar" id="m2Bar"></div></div></div>
+<div class="card"><div class="stat" id="pyqTop">0</div><div class="label">🎯 PYQs completed</div></div>
+</div>
+
+<div class="tabs"><button class="active" data-tab="dashboard">🏠 Command</button><button data-tab="videos">🎥 Videos</button><button data-tab="mcq">🧠 MCQ Arena</button><button data-tab="daily">⚔️ Daily Quest</button><button data-tab="achievements">🏆 Achievements</button></div>
+
+<section id="dashboard" class="activeSection">
+<div class="card"><div class="row"><h2>Mission progress</h2><b id="overallPct">0%</b></div><div class="progress"><div class="bar" id="overallBar"></div></div><p class="small">Your overall score combines lectures, both MCQ passes and daily execution.</p></div>
+<div class="card"><h2>📌 Today's mini-mission</h2><div id="miniMission"></div></div>
+<div class="card"><h2>📚 Subject map</h2><div id="subjectSummary"></div></div>
+<div class="card"><h2>⚡ Quick XP</h2><div class="two"><button class="primary" onclick="addVideo()">+1 video <span class="small">(+10 XP)</span></button><button onclick="addMCQ(1)">+1 Pass-1 MCQ</button><button onclick="addMCQ(2)">+1 Pass-2 MCQ</button><button onclick="addPYQ()">+1 PYQ</button></div></div>
+</section>
+
+<section id="videos"><div class="card"><h2>🎥 697-video campaign</h2><div class="small">Your subjects stay separate so you can finish one subject at a time.</div><div id="subjects"></div></div></section>
+
+<section id="mcq">
+<div class="card"><h2>🧠 MCQ Arena</h2><p class="small">Pass 1 = learn. Pass 2 = reinforce. Mark questions mentally as 🟢 Green, 🟡 Yellow, 🔴 Red and attack Yellow/Red on revision.</p>
+<div class="two"><div><div class="small">Pass 1 total</div><input id="mcq1" type="number" min="0" max="9000"></div><div><div class="small">Pass 2 total</div><input id="mcq2" type="number" min="0" max="9000"></div></div>
+<div class="two" style="margin-top:10px"><button class="primary" onclick="saveMCQ()">Save totals</button><button onclick="resetMCQ()">Reset</button></div></div>
+<div class="card boss"><h2>👹 Deadline Boss</h2><p class="small">The boss has 697 lectures + 18,000 MCQ attempts. Every completed task damages the boss.</p><div class="progress"><div class="bar" id="bossBar"></div></div><p class="small" id="bossText"></p></div>
+</section>
+
+<section id="daily">
+<div class="card"><h2>⚔️ Today's Quest</h2><div id="quests"></div><button class="primary" onclick="saveDaily()">Save quest</button></div>
+<div class="card"><h2>📊 Daily numbers</h2><div class="two"><div><div class="small">PYQs total</div><input id="pyq" type="number" min="0"></div><div><div class="small">Self-study hours today</div><input id="selfHours" type="number" min="0" step=".5"></div></div><button class="primary" style="margin-top:10px" onclick="saveDailyNumbers()">Save</button></div>
+<div class="card"><h2>🎯 Suggested daily load</h2><p class="small">7–8 videos • ~100 Pass-1 MCQs • ~70–80 Pass-2 MCQs when feasible • 30–40 PYQs • 1 hour self-study • non-nursing 4 days/week.</p></div>
+</section>
+
+<section id="achievements"><div class="card"><h2>🏆 Achievement Cabinet</h2><div id="achievementList"></div></div><div class="card"><h2>🔥 Streak system</h2><p class="small">Complete at least one Daily Quest item and save it each day. Your streak records consecutive calendar days of activity.</p></div></section>
+
+<footer>Personal study tool • Progress is stored locally on this device • Keep studying, not scrolling</footer>
+</main>
+<div id="toast" class="toast"></div><div id="confetti"></div>
+
+<script>
+const subjects=[["OBG",59],["MSN",309],["Fundamentals",88],["Community",72],["Pharmacology",60],["MHN",53],["Pedia",56]];
+const quotes=["Small wins, repeated daily, become the syllabus.","Your future rank is built in ordinary study sessions.","One lecture. One question. One step forward.","Consistency beats the perfect timetable.","Don't chase motivation. Build momentum.","Today’s work is tomorrow’s confidence.","Finish the block. Then take the next block."];
+const KEY="rrbQuestV2";
+let s=JSON.parse(localStorage.getItem(KEY)||"null")||{videos:{},mcq1:0,mcq2:0,pyq:0,selfHours:0,daily:{},xp:0,streak:0,lastActive:"",badges:[]};
+subjects.forEach(([n])=>{if(!(n in s.videos))s.videos[n]=0});
+function save(){localStorage.setItem(KEY,JSON.stringify(s));render()}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function dayKey(){return new Date().toISOString().slice(0,10)}
+function gain(x,msg){let oldLevel=Math.floor(s.xp/100)+1;s.xp+=x;let newLevel=Math.floor(s.xp/100)+1;if(newLevel>oldLevel){toast("🎉 LEVEL UP! You reached Level "+newLevel+"!");confetti()}else if(msg)toast(msg)}
+function touch(){let d=dayKey();if(s.lastActive!==d){let y=new Date();y.setDate(y.getDate()-1);let prev=y.toISOString().slice(0,10);s.streak=(s.lastActive===prev?s.streak:0)+1;s.lastActive=d}}
+function addVideo(subject){let target=subject||subjects.find(x=>s.videos[x[0]]<x[1]);if(!target)return;if(subject)s.videos[subject]=clamp(s.videos[subject]+1,0,subjects.find(x=>x[0]===subject)[1]);else s.videos[target[0]]++;touch();gain(10,"🎥 +1 lecture • +10 XP");checkBadges();save()}
+function changeVideo(n,d){let before=s.videos[n];s.videos[n]=clamp(before+d,0,subjects.find(x=>x[0]===n)[1]);if(d>0){touch();gain(10,"🎥 Lecture logged • +10 XP");checkBadges()}save()}
+function addMCQ(p){let k=p===1?"mcq1":"mcq2";s[k]=clamp(s[k]+1,0,9000);touch();gain(1,"🧠 MCQ logged • +1 XP");checkBadges();save()}
+function addPYQ(){s.pyq++;touch();gain(3,"🎯 PYQ logged • +3 XP");checkBadges();save()}
+function saveMCQ(){s.mcq1=clamp(+document.getElementById("mcq1").value||0,0,9000);s.mcq2=clamp(+document.getElementById("mcq2").value||0,0,9000);touch();gain(5,"MCQ totals saved • +5 XP");checkBadges();save()}
+function resetMCQ(){if(confirm("Reset both MCQ counters?")){s.mcq1=0;s.mcq2=0;save()}}
+const questNames=["Lecture target","MCQ Pass 1","MCQ Pass 2 / revision","PYQs","Self-study / active recall","Error log review","Non-nursing (if scheduled)"];
+function saveDaily(){let a=questNames.map((_,i)=>document.getElementById("q"+i).checked);s.daily[dayKey()]=a;let done=a.filter(Boolean).length;touch();gain(done*5,"⚔️ Quest saved • +"+(done*5)+" XP");checkBadges();save();if(done===7)confetti()}
+function saveDailyNumbers(){s.pyq=+document.getElementById("pyq").value||0;s.selfHours=+document.getElementById("selfHours").value||0;touch();gain(5,"📊 Daily numbers saved");save()}
+function pct(a,b){return Math.min(100,Math.round(a/b*100))}
+function checkBadges(){
+let vd=subjects.reduce((t,[n])=>t+s.videos[n],0), newB=[];
+if(vd>=1)newB.push("firstVideo");if(vd>=50)newB.push("50Videos");if(vd>=100)newB.push("100Videos");if(vd>=697)newB.push("allVideos");
+if(s.mcq1>=100)newB.push("100MCQ");if(s.mcq1>=9000)newB.push("pass1");if(s.mcq2>=9000)newB.push("pass2");if(s.pyq>=100)newB.push("100PYQ");if(s.streak>=7)newB.push("7streak");if(s.streak>=30)newB.push("30streak");
+newB.forEach(b=>{if(!s.badges.includes(b)){s.badges.push(b);toast("🏆 New badge unlocked!");confetti()}});
+}
+function render(){
+let vd=subjects.reduce((t,[n])=>t+s.videos[n],0);
+document.getElementById("vDone").textContent=vd;document.getElementById("mDone").textContent=s.mcq1;document.getElementById("m2Done").textContent=s.mcq2;document.getElementById("pyqTop").textContent=s.pyq;
+document.getElementById("vBar").style.width=pct(vd,697)+"%";document.getElementById("mBar").style.width=pct(s.mcq1,9000)+"%";document.getElementById("m2Bar").style.width=pct(s.mcq2,9000)+"%";
+let days=Math.max(0,Math.ceil((new Date("2026-12-30T23:59:59")-new Date())/86400000));document.getElementById("daysLeft").textContent=days;
+document.getElementById("streak").textContent=s.streak;document.getElementById("xp").textContent=s.xp;document.getElementById("level").textContent=Math.floor(s.xp/100)+1;document.getElementById("badges").textContent=s.badges.length;
+let next=(Math.floor(s.xp/100)+1)*100;document.getElementById("nextXP").textContent=next;document.getElementById("xpBar").style.width=((s.xp%100))+"%";
+let overall=Math.round(((vd/697)+(s.mcq1/9000)+(s.mcq2/9000))/3*100);document.getElementById("overallPct").textContent=overall+"%";document.getElementById("overallBar").style.width=overall+"%";
+let bossDone=vd+s.mcq1+s.mcq2;document.getElementById("bossBar").style.width=pct(bossDone,697+18000)+"%";document.getElementById("bossText").textContent=bossDone+" / 18,697 mission actions completed";
+document.getElementById("mcq1").value=s.mcq1;document.getElementById("mcq2").value=s.mcq2;document.getElementById("pyq").value=s.pyq;document.getElementById("selfHours").value=s.selfHours;
+document.getElementById("quote").textContent=quotes[Math.floor(Date.now()/86400000)%quotes.length];
+let boxes=document.getElementById("subjects");boxes.innerHTML="";subjects.forEach(([n,total])=>{let val=s.videos[n],d=document.createElement("div");d.className="subject";d.innerHTML=`<div class="row"><div><h3>${n}</h3><div class="small">${val}/${total} • ${pct(val,total)}%</div></div><div><button onclick="changeVideo('${n}',-1)">−</button> <button class="primary" onclick="changeVideo('${n}',1)">+</button></div></div><div class="progress"><div class="bar" style="width:${pct(val,total)}%"></div></div>`;boxes.appendChild(d)});
+document.getElementById("subjectSummary").innerHTML=subjects.map(([n,t])=>`<button class="subjectBtn" onclick="changeVideo('${n}',1)">${n}: ${s.videos[n]}/${t} (${pct(s.videos[n],t)}%)</button>`).join("");
+let mission=Math.min(8,Math.max(1,8-Math.floor(vd/100)));document.getElementById("miniMission").innerHTML=`<div class="row"><b>Next: complete ${mission} lecture${mission>1?"s":""} today</b><button class="primary" onclick="document.querySelector('[data-tab=daily]').click()">Open quest</button></div>`;
+let a=s.daily[dayKey()]||[];let q=document.getElementById("quests");q.innerHTML="";questNames.forEach((n,i)=>{let d=document.createElement("label");d.className="quest "+(a[i]?"done":"");d.innerHTML=`<input id="q${i}" type="checkbox" ${a[i]?"checked":""}><span class="qtext">${n}</span>`;d.querySelector("input").onchange=()=>d.classList.toggle("done",d.querySelector("input").checked);q.appendChild(d)});
+let names={firstVideo:"🎥 First Lecture",50Videos:"🔥 50 Lectures",100Videos:"🚀 100 Lectures",allVideos:"👑 697 Lectures",100MCQ:"🧠 100 MCQs",pass1:"📘 Pass 1 Complete",pass2:"🔁 Pass 2 Complete",100PYQ:"🎯 100 PYQs",7streak:"🔥 7-Day Streak",30streak:"⚡ 30-Day Streak"};document.getElementById("achievementList").innerHTML=s.badges.length?s.badges.map(b=>`<span class="achievement">${names[b]||"🏆 Achievement"}</span>`).join(""):"<p class='small'>No badges yet. Log your first lecture to start the cabinet.</p>";
+document.getElementById("greeting").textContent= s.streak>=7?"🔥 Momentum mode: protect the streak!":"Mission: Nursing Superintendent";
+}
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.classList.add("show");clearTimeout(window._toast);window._toast=setTimeout(()=>x.classList.remove("show"),1800)}
+function confetti(){let c=document.getElementById("confetti");c.innerHTML="";for(let i=0;i<70;i++){let p=document.createElement("i");p.className="piece";p.style.left=Math.random()*100+"%";p.style.top="-20px";p.style.background=["#67e8f9","#a78bfa","#34d399","#fbbf24","#fb7185"][i%5];p.style.setProperty("--x",(Math.random()*260-130)+"px");p.style.animationDelay=(Math.random()*.35)+"s";c.appendChild(p)}setTimeout(()=>c.innerHTML="",1700)}
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll("section").forEach(x=>x.classList.remove("activeSection"));document.getElementById(b.dataset.tab).classList.add("activeSection")});
+checkBadges();render();
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js"));
+</script>
+</body></html>
